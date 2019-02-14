@@ -43,11 +43,11 @@ class DLRemoveWpCrap {
                 return $urls;
         }
 
-        public function crunchifyRemoveVersion()
+        public function removeVersion()
         {
                 return '';
         }
-        public function crunchifyCleanupQueryString($src)
+        public function cleanupQueryString($src)
         {
                 $parts = explode('?', $src);
                 return $parts[0];
@@ -79,11 +79,11 @@ class DLRemoveWpCrap {
         {
                 add_filter('wp_headers', ['DLRemoveWpCrap', 'unsetPingback']);
                 add_filter('post_comments_feed_link', ['DLRemoveWpCrap', 'returnNull']);
-                add_filter('script_loader_src', ['DLRemoveWpCrap','crunchifyCleanupQueryString'], 15, 1);
-                add_filter('style_loader_src', ['DLRemoveWpCrap','crunchifyCleanupQueryString'], 15, 1);
+                add_filter('script_loader_src', ['DLRemoveWpCrap','cleanupQueryString'], 15, 1);
+                add_filter('style_loader_src', ['DLRemoveWpCrap','cleanupQueryString'], 15, 1);
                 add_filter('xmlrpc_enabled', '__return_false');
                 add_filter('get_search_form', create_function('$a', "return null;"));
-                add_filter('the_generator', ['DLRemoveWpCrap','crunchifyRemoveVersion']);
+                add_filter('the_generator', ['DLRemoveWpCrap','removeVersion']);
                 add_action('init', ['DLRemoveWpCrap','disableEmojis']);
                 add_action('parse_query', ['DLRemoveWpCrap','fbFilterQuery']);
                 remove_action('wp_head', 'rest_output_link_wp_head', 10);
